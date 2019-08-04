@@ -109,26 +109,34 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-form
-  display: block
-  margin: 0 auto
-  text-align: left
-label
-  display: block
-input
-  width: 100%
-  padding: .5em
-  font: inherit
-ul
-  list-style-type: none
-  padding: 0
-  margin: 0.25em 0
-  li
-    font-size: 0.5em
-.validation-errors
-  height: 32px
-.form-actions
-  p
-    font-size: 0.5em
+<style scoped>
+form {
+  display: block;
+  margin: 0 auto;
+  text-align: left;
+}
+label {
+  display: block;
+}
+input {
+  width: 100%;
+  padding: .5em;
+  font: inherit;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0.25em 0;
+}
+
+ul li {
+  font-size: 0.5em;
+}
+.validation-errors {
+  height: 32px;
+}
+.form-actions p {
+  font-size: 0.5em;
+}
 </style>

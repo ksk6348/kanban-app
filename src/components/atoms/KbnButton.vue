@@ -34,11 +34,13 @@ export default {
 }
 </script>
 
-<style scope lang="sass">
-.kbn-button
-  padding: .6em 1.3em
-.kbn-button-text
-  border: none
-  padding-right: 0
-  padding-left: 0
+<style scope>
+.kbn-button {
+  padding: .6em 1.3em;
+}
+.kbn-button-text {
+  border: none;
+  padding-right: 0;
+  padding-left: 0;
+}
 </style>

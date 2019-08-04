@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import KbnLoginForm from '@/components/molecules/KbnLoginForm.vue'
+import sinon from 'sinon'
 
 describe('KbnLoginForm', () => {
   describe('プロパティ', () => {
@@ -119,6 +120,61 @@ describe('KbnLoginForm', () => {
             progress: true
           })
           expect(loginForm.vm.disableLoginAction).toBe(true)
+        })
+      })
+    })
+    describe('onlogin', () => {
+      let loginForm
+      let onloginStub
+      beforeEach(done => {
+        onloginStub = sinon.stub()
+        loginForm = mount(KbnLoginForm, {
+          propsData: { onlogin: onloginStub }
+        })
+        loginForm.setData({
+          email: 'foo@example.com',
+          password: '12345678'
+        })
+        loginForm.vm.$nextTick(done)
+      })
+      describe('resolve', () => {
+        it('reolveされること', done => {
+          onloginStub.resolves()
+          loginForm.find('button').trigger('click')
+          expect(onloginStub.called).toBe(false)
+          expect(loginForm.vm.error).toBe('')
+          expect(loginForm.vm.disableLoginAction).toBe(true)
+          loginForm.vm.$nextTick(() => {
+            expect(onloginStub.called).toBe(true)
+            const authInfo = onloginStub.args[0][0]
+            expect(authInfo.email).toBe(loginForm.vm.email)
+            expect(authInfo.password).toBe(loginForm.vm.password)
+            loginForm.vm.$nextTick(() => {
+              expect(loginForm.vm.error).toBe('')
+              expect(loginForm.vm.dispatch).toBe(false)
+              done()
+            })
+          })
+        })
+      })
+      describe('reject', () => {
+        it('rejectされること', done => {
+          onloginStub.rejects(new Error('login error!'))
+          loginForm.find('button').trigger('click')
+          expect(onloginStub.called).toBe(false)
+          expect(loginForm.vm.error).toBe('')
+          expect(loginForm.vm.disableLoginAction).toBe(true)
+          loginForm.vm.$nextTick(() => {
+            expect(onloginStub.called).toBe(true)
+            const authInfo = onloginStub.args[0][0]
+            expect(authInfo.email).toBe(loginForm.vm.email)
+            expect(authInfo.password).toBe(loginForm.vm.password)
+            loginForm.vm.$nextTick(() => {
+              expect(loginForm.vm.error).toBe('login error!')
+              expect(loginForm.vm.disableLoginAction).toBe(false)
+              done()
+            })
+          })
         })
       })
     })
