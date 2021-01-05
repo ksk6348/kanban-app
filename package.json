@@ -14,7 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "es6-promise": "^4.2.6",
     "sinon": "^7.3.2",
